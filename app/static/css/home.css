@@ -1,0 +1,66 @@
+
+#movieTable {
+    width: 1000px;
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 3px solid #369;
+    margin: 20px 10px;
+}
+
+#movieTable th {
+    background-color: #4f8fcf;
+
+    width: 147px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: rgba(255, 255, 255, 0.87);
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+}
+
+#movieTable td {
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+
+#searchInput{
+    width : 300px;
+    height : 40px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid black;
+    margin-left:13px;
+}
+
+#searchBtn{
+    width:100px;
+    height:45px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid black;
+
+}
+
+.invisible{
+    margin-left:13px;
+    display: none;
+    border-bottom: 2px rgba(121, 187, 207, 0.55) solid;
+    border-left: 2px rgba(121, 187, 207, 0.55) solid;
+    border-right: 2px rgba(121, 187, 207, 0.55) solid;
+
+}
+
+.autoRow{
+    margin-top:3px;
+    margin-bottom:3px;
+}
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chat UI Screen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .chat-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .chat-box {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow-y: scroll;
+            height: 300px;
+        }
+
+        .chat-message {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .chat-message p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-input {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #3e8e41;
+        }
+
+        .assistant {
+            color: blue;
+        }
+
+        .select-btn button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .select-btn button:hover {
+            background-color: #3e8e41;
+        }
+
+        .select-box {
+            margin-bottom: 10px;
+        }
+
+        .select-box select option {
+            cursor: pointer;
+        }
+
+        bodY {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        .center {
+        height: 12vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f2f2f2;
+        }
+        .wave {
+        width: 5px;
+        height: 12px;
+        background: linear-gradient(45deg, rgb(255, 123, 0), #fff);
+        margin: 10px;
+        animation: wave 1s linear infinite;
+        border-radius: 20px;
+        }
+        .wave:nth-child(2) {
+        animation-delay: 0.1s;
+        }
+        .wave:nth-child(3) {
+        animation-delay: 0.2s;
+        }
+        .wave:nth-child(4) {
+        animation-delay: 0.3s;
+        }
+        .wave:nth-child(5) {
+        animation-delay: 0.4s;
+        }
+        .wave:nth-child(6) {
+        animation-delay: 0.5s;
+        }
+        .wave:nth-child(7) {
+        animation-delay: 0.6s;
+        }
+        .wave:nth-child(8) {
+        animation-delay: 0.7s;
+        }
+        .wave:nth-child(9) {
+        animation-delay: 0.8s;
+        }
+        .wave:nth-child(10) {
+        animation-delay: 0.9s;
+        }
+
+        @keyframes wave {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-box">
+            <div class="chat-message">
+                <p class="assistant">안녕하세요. 저는 공부엉이입니다!</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message here...">
+            <button>Send</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const rand_0_99 = Math.floor(Math.random() * 1000);
+        const chatBox = document.querySelector('.chat-box');
+        var btnEnter = 1
+
+        const sendMessage = async () => {
+            document.querySelector('.chat-input button').disabled = true;
+            document.querySelector('.chat-input button').textContent = "Load";
+            btnEnter = 0;
+            
+            const chatInput = document.querySelector('.chat-input input');
+            
+            const chatMessage = document.createElement('div');
+            chatMessage.classList.add('chat-message');
+            chatMessage.innerHTML = `<p>${chatInput.value}</p>`;
+
+
+            if (chatInput.value.trim().length != 0) {
+                const userMessages = chatInput.value;
+                chatInput.value = '';
+
+                chatBox.appendChild(chatMessage);
+                chatBox.scroll(0, chatBox.scrollHeight)
+            
+                const astrologerMessage = document.createElement('div');
+                astrologerMessage.classList.add('bodY');
+                astrologerMessage.innerHTML = `
+                <div class="center">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                </div>`;
+                chatBox.appendChild(astrologerMessage);
+                chatBox.scroll(0, chatBox.scrollHeight);
+
+                const datas = JSON.stringify({
+                        userMessages: userMessages
+                    });
+                console.log(datas)
+
+                // fetchAuthorName(datas)
+                // const iter = main(datas);
+                // const request = iter.next().value; /* axios.get(...)을 받는다. */
+                // request.then(res => {
+                //     iter.next(res); /* iter에 res를 넘겨주면서 iter을 재실행시킨다. */
+                // });
+
+
+                const response = await fetch(`/gongOwlclassification/${rand_0_99}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userMessages: userMessages
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data == '입시') {
+                    astrologerMessage.classList.add('select-btn');
+                    astrologerMessage.innerHTML = 
+                    `<button class ='univ' onclick="univ_onclick();this.onclick = null;"> 대학교 정보 </button>
+                    <button class ='academy'> 학원 정보 </button>
+                    `;
+                    disableBtn()
+                }
+                else {
+                    astrologerMessage.classList.add('chat-message');
+                    if (data == "streaming") {
+                        fetchAuthorName(astrologerMessage)
+                    }
+                    else {
+                        astrologerMessage.innerHTML = `<p class='assistant'>${data}</p>`;
+                        disableBtn()
+                    }
+                }
+
+                chatBox.appendChild(astrologerMessage);
+                chatBox.scroll(0, chatBox.scrollHeight);
+
+            }
+            else {
+                disableBtn()
+            }
+        };
+
+        document.querySelector('.chat-input button').addEventListener('click', sendMessage);
+        document.querySelector('.chat-input input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter' && btnEnter == 1) {
+        // code for enter
+        sendMessage()
+        }
+    });
+
+    function sleep(ms) {
+        const wakeUpTime = Date.now() + ms;
+        while (Date.now() < wakeUpTime) {}
+    }
+
+    function disableBtn() {
+        document.querySelector('.chat-input button').disabled = false;
+        document.querySelector('.chat-input button').textContent = "Send";
+        btnEnter = 1;
+    }
+
+    function fetchAuthorName(astrologerMessage) {
+        let intervalId;
+        var streamValue = "";
+
+        function fetchData() {
+            fetch(`/stream/${rand_0_99}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+            .then((response) => response.json())
+            .then((data) => {  
+                console.log(data)
+                if (data != "stopStreaming") {
+                    streamValue = streamValue.concat(data)
+                }
+                else {
+                    stopFetching()
+                }
+
+                astrologerMessage.innerHTML = `<p class='assistant'>${streamValue}</p>`;
+                chatBox.appendChild(astrologerMessage);
+                chatBox.scroll(0, chatBox.scrollHeight);
+
+            })
+            .catch((error) => {
+            console.log(error)
+            stop = false
+            });
+        };
+
+        function startFetching() {
+            intervalId = setInterval(fetchData, 100); // delay 1 second between requests
+        };
+
+        function stopFetching() {
+            clearInterval(intervalId);
+            disableBtn()
+        };
+
+        startFetching();
+
+    }
+
+    function univ_onclick(){
+        const astrologerMessage = document.createElement('div');
+        astrologerMessage.classList.add('select-box');
+        astrologerMessage.innerHTML = `
+        <select name="univ-list" size="5">
+            <option value="dongguk"> 동국대학교 </option>
+            <option value="gungguk"> 건국대학교 </option>
+            <option value="hongik"> 홍악대학교 </option>
+        </select>
+        `;
+
+        chatBox.appendChild(astrologerMessage);
+        chatBox.scroll(0, chatBox.scrollHeight);
+    }
+
+    </script>
+</body>
+
+</html>
