@@ -58,6 +58,10 @@ body {
     background-color: #3e8e41;
 }
 
+
+p {
+    white-space: pre-wrap;
+}
 .assistant {
     color: blue;
 }

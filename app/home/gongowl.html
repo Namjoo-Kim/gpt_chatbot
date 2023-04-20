@@ -79,6 +79,9 @@
                 // });
 
 
+                // openai_test(userMessages);
+
+
                 const response = await fetch(`/gongOwlclassification/${rand_0_99}`, {
                     method: 'POST',
                     headers: {
@@ -138,6 +141,37 @@
         while (Date.now() < wakeUpTime) {}
     }
 
+    async function openai_test(userMessages) {
+  
+    var url = "https://api.openai.com/v1/chat/completions";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", "Bearer api-key");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            open_ai_response = xhr.responseText;
+            console.log(open_ai_response);
+        }};
+
+    messages=[
+    {"role": "system", "content": "당신은 진로 상담가입니다. 당신은 질문에 대해서 성심성의껏 대답합니다."},
+    {"role": "user", "content": userMessages}
+    ]
+
+    var data = `{
+        "model": "gpt-3.5-turbo",
+        "messages": ${messages},
+        "temperature": 1
+    }`;
+
+    xhr.send(data);
+    }
+
     function disableBtn() {
         document.querySelector('.chat-input button').disabled = false;
         document.querySelector('.chat-input button').textContent = "Send";
@@ -145,7 +179,7 @@
     }
 
     function fetchAuthorName(astrologerMessage) {
-        var streamValue = "";
+        var streamValue = ``;
 
         function fetchData() {
             fetch(`/stream/${rand_0_99}`, {
@@ -156,7 +190,6 @@
                 })
             .then((response) => response.json())
             .then((data) => {  
-                console.log(data)
                 if (data != "stopStreaming") {
                     streamValue = streamValue.concat(data)
                 }
