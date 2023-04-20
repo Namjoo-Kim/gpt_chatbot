@@ -12,61 +12,54 @@ import os
 
 root = os.path.dirname(os.path.abspath(__file__))
 
-
-class Main(FastAPI):
-    def __init__(self, **extra: Any):
-        super().__init__(**extra)
-
-        # self._app = FastAPI()
-        self.initGongowl = gongowl.Driver()
-        self.result = {}
-
-        self.mount(
+app = FastAPI()
+app.mount(
             "/app/static",
             StaticFiles(directory=os.path.join(root, 'app/static')),
             name="static",
         )
 
-        self.add_middleware(
+app.add_middleware(
             CORSMiddleware,
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
         )
 
-        self.add_api_route(path='/', endpoint= self.read_root, methods=['GET'])
-        self.add_api_route(path='/tdingbot', endpoint= self.tdingbot, methods=['POST'])
+initGongowl = gongowl.Driver()
+results = {}
 
-        self.add_api_route(path='/davinciBot', endpoint= self.davinciBot, methods=['GET'])
-        self.add_api_route(path='/tdingDavinci', endpoint= self.tdingDavinci, methods=['POST'])
-
-        self.add_api_route(path='/gongowl', endpoint= self.gongowl, methods=['GET'])
-        self.add_api_route(path='/gongOwlclassification/{id}', endpoint= self.gongOwlclassification, methods=['POST'])
-        self.add_api_route(path='/stream/{id}', endpoint= self.stream, methods=['POST'])
+class Main2():
+    def __init__(self):
+        print('init')
+        super().__init__()
 
 
-    async def read_root(self):
+
+    @app.get("/")
+    async def read_root():
         with open(os.path.join(root, 'app/home/index.html')) as fh :
             data = fh.read()
 
         return Response(content=data, media_type = 'text/html')
 
-
-    async def davinciBot(self):
+    @app.get("/davinciBot") 
+    async def davinciBot():
         with open(os.path.join(root, 'app/home/davinci.html')) as fh :
             data = fh.read()
 
         return Response(content=data, media_type = 'text/html')
 
-
-    async def gongowl(self):
+    @app.get("/gongowl") 
+    async def gongowl():
         with open(os.path.join(root, 'app/home/gongowl.html')) as fh :
             data = fh.read()
 
         return Response(content=data, media_type = 'text/html')
 
 
-    def tdingbot( self, Tding: tdingModel ):
+    @app.post("/tdingbot") 
+    def tdingbot(Tding: tdingModel ):
         userMessages = Tding.userMessages
         assistantMessages = Tding.assistantMessages
         
@@ -75,7 +68,8 @@ class Main(FastAPI):
 
         return assistantMessages
 
-    def tdingDavinci(self, Davinci: davinciModel ):
+    @app.post("/tdingDavinci") 
+    def tdingDavinci(Davinci: davinciModel ):
         userMessages = Davinci.userMessages
         question = Davinci.question
 
@@ -85,10 +79,12 @@ class Main(FastAPI):
 
         return assistantMessages
 
-    def gongOwlclassification(self, gongowlModel: gongowlModel, id: str ):
+    @app.post("/gongOwlclassification/{id}") 
+    def gongOwlclassification(gongowlModel: gongowlModel, id: str ):
         userMessages = gongowlModel.userMessages
 
-        result = self.initGongowl.addMessages(userMessages)
+        print(userMessages)
+        result = initGongowl.addMessages(userMessages)
 
         mes1 = "죄송해요. 입시나 진로에 대해 자세하게 물어봐주세요."
         mes2 = "또 다른 질문을 해보시면 어떨까요?"
@@ -97,33 +93,21 @@ class Main(FastAPI):
             return result
         
         else:
-            self.result[id] = result
+            initGongowl.saveResult(id, result)
             return "streaming"
 
-        # return result
 
-
-    def stream(self, id: str):
-        def gptstream(result):
-            for chunk in result:
-                chunk_message = chunk['choices'][0]['delta']  # extract the message
-
-                yield ''.join([m.get('content', '') for m in [chunk_message]])     
-
-        try:
-            value = next(gptstream(self.result[id]))
-            return value
-        except:
-            return "stopStreaming"
-              
+    @app.post("/stream/{id}") 
+    def stream(id: str):
+        
+        return initGongowl.stream(id)
+      
 
 #python -m uvicorn main:app --reload
 def main():
-    app = Main()
-
     print('==main()==')    
     uvicorn.run(
-    app=app, #"main:app",
+    app= "main2:app",
     host="0.0.0.0",
     port=1234,
     reload=False,

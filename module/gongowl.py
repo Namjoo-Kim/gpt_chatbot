@@ -124,7 +124,7 @@ class Driver:
         return response
     
 
-    def saveRsult(self, id, result):
+    def saveResult(self, id, result):
         print(id, result)
         self.result[id] = result
 

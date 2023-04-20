@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.chat-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.chat-box {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.chat-message {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-message p {
+    margin: 0;
+    padding: 0;
+}
+
+.chat-input {
+    display: flex;
+    margin-top: 20px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #3e8e41;
+}
+
+.assistant {
+    color: blue;
+}
+
+.select-btn button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.select-btn button:hover {
+    background-color: #3e8e41;
+}
+
+.select-box {
+    margin-bottom: 10px;
+}
+
+.select-box select option {
+    cursor: pointer;
+}
+
+bodY {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+.center {
+height: 12vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #f2f2f2;
+}
+.wave {
+width: 5px;
+height: 12px;
+background: linear-gradient(45deg, rgb(255, 123, 0), #fff);
+margin: 10px;
+animation: wave 1s linear infinite;
+border-radius: 20px;
+}
+.wave:nth-child(2) {
+animation-delay: 0.1s;
+}
+.wave:nth-child(3) {
+animation-delay: 0.2s;
+}
+.wave:nth-child(4) {
+animation-delay: 0.3s;
+}
+.wave:nth-child(5) {
+animation-delay: 0.4s;
+}
+.wave:nth-child(6) {
+animation-delay: 0.5s;
+}
+.wave:nth-child(7) {
+animation-delay: 0.6s;
+}
+.wave:nth-child(8) {
+animation-delay: 0.7s;
+}
+.wave:nth-child(9) {
+animation-delay: 0.8s;
+}
+.wave:nth-child(10) {
+animation-delay: 0.9s;
+}
+
+.stop-btn button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.stop-btn button:hover {
+    background-color: #3e8e41;
+}
+
+
+@keyframes wave {
+0% {
+    transform: scale(0);
+}
+50% {
+    transform: scale(1);
+}
+100% {
+    transform: scale(0);
+}
+}

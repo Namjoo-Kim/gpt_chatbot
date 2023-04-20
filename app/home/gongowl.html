@@ -3,156 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat UI Screen</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
+    <link rel="stylesheet" href="/app/static/css/gongowl.css">
 
-        .chat-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .chat-box {
-            background-color: #f2f2f2;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow-y: scroll;
-            height: 300px;
-        }
-
-        .chat-message {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .chat-message p {
-            margin: 0;
-            padding: 0;
-        }
-
-        .chat-input {
-            display: flex;
-            margin-top: 20px;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .chat-input button {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .chat-input button:hover {
-            background-color: #3e8e41;
-        }
-
-        .assistant {
-            color: blue;
-        }
-
-        .select-btn button {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .select-btn button:hover {
-            background-color: #3e8e41;
-        }
-
-        .select-box {
-            margin-bottom: 10px;
-        }
-
-        .select-box select option {
-            cursor: pointer;
-        }
-
-        bodY {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        }
-        .center {
-        height: 12vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #f2f2f2;
-        }
-        .wave {
-        width: 5px;
-        height: 12px;
-        background: linear-gradient(45deg, rgb(255, 123, 0), #fff);
-        margin: 10px;
-        animation: wave 1s linear infinite;
-        border-radius: 20px;
-        }
-        .wave:nth-child(2) {
-        animation-delay: 0.1s;
-        }
-        .wave:nth-child(3) {
-        animation-delay: 0.2s;
-        }
-        .wave:nth-child(4) {
-        animation-delay: 0.3s;
-        }
-        .wave:nth-child(5) {
-        animation-delay: 0.4s;
-        }
-        .wave:nth-child(6) {
-        animation-delay: 0.5s;
-        }
-        .wave:nth-child(7) {
-        animation-delay: 0.6s;
-        }
-        .wave:nth-child(8) {
-        animation-delay: 0.7s;
-        }
-        .wave:nth-child(9) {
-        animation-delay: 0.8s;
-        }
-        .wave:nth-child(10) {
-        animation-delay: 0.9s;
-        }
-
-        @keyframes wave {
-        0% {
-            transform: scale(0);
-        }
-        50% {
-            transform: scale(1);
-        }
-        100% {
-            transform: scale(0);
-        }
-        }
-
-
-
-    </style>
 </head>
 
 <body>
@@ -166,12 +18,16 @@
             <input type="text" placeholder="Type your message here...">
             <button>Send</button>
         </div>
+        <div class="stop-btn">
+            <button onclick="fetchAuthorName()";>Stop Generating</button>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const rand_0_99 = Math.floor(Math.random() * 1000);
         const chatBox = document.querySelector('.chat-box');
         var btnEnter = 1
+        let intervalId;
 
         const sendMessage = async () => {
             document.querySelector('.chat-input button').disabled = true;
@@ -235,7 +91,11 @@
 
                 const data = await response.json();
                 
+                const ele = document.querySelector(".bodY");
+                ele.classList.remove("bodY");
+
                 if (data == '입시') {
+                    
                     astrologerMessage.classList.add('select-btn');
                     astrologerMessage.innerHTML = 
                     `<button class ='univ' onclick="univ_onclick();this.onclick = null;"> 대학교 정보 </button>
@@ -246,6 +106,8 @@
                 else {
                     astrologerMessage.classList.add('chat-message');
                     if (data == "streaming") {
+                        document.querySelector('.stop-btn button').style.visibility = 'visible';
+
                         fetchAuthorName(astrologerMessage)
                     }
                     else {
@@ -283,7 +145,6 @@
     }
 
     function fetchAuthorName(astrologerMessage) {
-        let intervalId;
         var streamValue = "";
 
         function fetchData() {
@@ -310,7 +171,6 @@
             })
             .catch((error) => {
             console.log(error)
-            stop = false
             });
         };
 
@@ -319,11 +179,17 @@
         };
 
         function stopFetching() {
+            document.querySelector('.stop-btn button').style.visibility = 'hidden';
             clearInterval(intervalId);
             disableBtn()
         };
 
-        startFetching();
+        if (astrologerMessage) {
+            startFetching();
+        }
+        else {
+            stopFetching();
+        }
 
     }
 
