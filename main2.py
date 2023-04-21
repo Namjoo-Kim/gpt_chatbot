@@ -80,8 +80,9 @@ class Main2():
         return assistantMessages
 
     @app.post("/gongOwlclassification/{id}") 
-    def gongOwlclassification(gongowlModel: gongowlModel, id: str ):
+    def gongOwlclassification(gongowlModel: gongowlModel ):
         userMessages = gongowlModel.userMessages
+        id = gongowlModel.id
 
         print(userMessages)
         result = initGongowl.addMessages(userMessages)

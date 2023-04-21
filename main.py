@@ -85,8 +85,9 @@ class Main(FastAPI):
 
         return assistantMessages
 
-    def gongOwlclassification(self, gongowlModel: gongowlModel, id: str ):
+    def gongOwlclassification(self, gongowlModel: gongowlModel ):
         userMessages = gongowlModel.userMessages
+        id = gongowlModel.id
 
         result = self.initGongowl.addMessages(userMessages)
 

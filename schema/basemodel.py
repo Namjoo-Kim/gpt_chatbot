@@ -13,3 +13,4 @@ class davinciModel(BaseModel):
 
 class gongowlModel(BaseModel):
     userMessages : str 
+    id : str
