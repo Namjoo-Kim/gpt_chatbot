@@ -41,7 +41,9 @@ const sendMessage = async () => {
         chatBox.scroll(0, chatBox.scrollHeight);
 
         const datas = JSON.stringify({
-                userMessages: userMessages
+                userMessages: userMessages,
+                id : rand_0_99
+
             });
         console.log(datas)
 
@@ -62,7 +64,8 @@ const sendMessage = async () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userMessages: userMessages
+                userMessages: userMessages,
+                id : rand_0_99
             })
         });
 
